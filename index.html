@@ -7,23 +7,23 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg: #f5f4f0;
-    --surface: #ffffff;
-    --border: #e2e0d8;
-    --text: #1a1917;
-    --muted: #6b6a65;
-    --accent: #1a6b4a;
-    --accent-light: #e8f5ee;
-    --danger: #c0392b;
-    --danger-light: #fdf0ee;
-    --warning: #b8860b;
-    --warning-light: #fdf8e1;
-    --sex: #1a4a6b;
-    --sex-light: #e8f0f5;
-    --sab: #6b4a1a;
-    --sab-light: #f5f0e8;
-    --dom: #6b1a4a;
-    --dom-light: #f5e8f0;
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --border: #2a2d3a;
+    --text: #e8e9f0;
+    --muted: #7a7d8e;
+    --accent: #2ecc8a;
+    --accent-light: #0d2e1f;
+    --danger: #e05555;
+    --danger-light: #2a1515;
+    --warning: #e0b04a;
+    --warning-light: #2a2010;
+    --sex: #5b9bd5;
+    --sex-light: #0d1e2e;
+    --sab: #d5a55b;
+    --sab-light: #2e1e0d;
+    --dom: #c55bd5;
+    --dom-light: #2a0d2e;
     --radius: 12px;
     --radius-sm: 8px;
   }
@@ -148,7 +148,7 @@
     width: 100%; padding: 11px 14px;
     font-size: 15px; font-family: 'DM Sans', sans-serif;
     border: 1px solid var(--border); border-radius: var(--radius-sm);
-    background: var(--bg); color: var(--text);
+    background: #0a0c12; color: var(--text);
     outline: none; transition: border-color .15s;
   }
   .form-group input:focus { border-color: var(--accent); }
@@ -254,10 +254,10 @@
 <header>
   <div class="header-top">
     <div>
-      <div class="app-title">🚌 Transporte</div>
+      <div class="app-title">Transporte</div>
       <div class="event-name" id="event-label">Configure o evento →</div>
     </div>
-    <button class="btn-config" onclick="openModal()" aria-label="Configurações">⚙️</button>
+    <button class="btn-config" onclick="openModal()" aria-label="Configurações">&#9881;</button>
   </div>
   <div class="tabs">
     <button class="tab active" onclick="switchTab('resumo',this)">Resumo</button>
@@ -307,7 +307,7 @@
   <div class="modal">
     <div class="modal-header">
       <span class="modal-title">Configurar evento</span>
-      <button class="btn-close" onclick="closeModal()">✕</button>
+      <button class="btn-close" onclick="closeModal()">&#10005;</button>
     </div>
     <div class="form-group">
       <label>Nome do evento</label>
@@ -458,7 +458,7 @@ async function addPessoa() {
     document.getElementById('inp-obs').value = '';
     selectedDays = [];
     ['sex','sab','dom'].forEach(d => document.getElementById('btn-'+d).className='day-btn');
-    showToast('✓ ' + nome + ' adicionado(a)!');
+    showToast(nome + ' adicionado(a)!');
     render();
   } catch(e) { showToast('Erro ao salvar'); }
 
@@ -503,7 +503,7 @@ function renderResumo() {
   if (total === 0) {
     document.getElementById('resumo-content').innerHTML = `
       <div class="empty">
-        <div class="empty-icon">🚌</div>
+        <div class="empty-icon">—</div>
         Nenhuma pessoa adicionada ainda.<br>Use a aba "+ Pessoa" para começar.
       </div>`;
     return;
@@ -543,7 +543,7 @@ function renderResumo() {
 
 function renderLista() {
   if (pessoas.length === 0) {
-    document.getElementById('lista-content').innerHTML = '<div class="empty"><div class="empty-icon">📋</div>Nenhuma pessoa cadastrada.</div>';
+    document.getElementById('lista-content').innerHTML = '<div class="empty"><div class="empty-icon">—</div>Nenhuma pessoa cadastrada.</div>';
     return;
   }
 
@@ -565,7 +565,7 @@ function renderLista() {
           <div class="person-name">${p.nome}</div>
           <div class="person-meta">${fmt(p.valor)}${outrosDias?' · '+outrosDias:''}${p.obs?' · '+p.obs:''}</div>
         </div>
-        <button class="btn-del" onclick="removePessoa('${p.id}')">✕</button>
+        <button class="btn-del" onclick="removePessoa('${p.id}')">&#10005;</button>
       </div>`;
     });
     html += `</div></div>`;
