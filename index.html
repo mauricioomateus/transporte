@@ -16,10 +16,7 @@
   --accent: #4a90d9;
   --accent-dim: #1a2d45;
   --green: #2ecc7a;
-  --green-dim: #0d2e1c;
   --red: #e05555;
-  --red-dim: #2e0f0f;
-  --amber: #e0b04a;
   --sex-color: #4a90d9;
   --sab-color: #e0a030;
   --dom-color: #a060d0;
@@ -27,70 +24,31 @@
   --radius-sm: 8px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  max-width: 520px;
-  margin: 0 auto;
-}
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; max-width: 520px; margin: 0 auto; }
 
-/* HEADER */
-header {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 14px 18px 10px;
-  position: sticky; top: 0; z-index: 20;
-}
+header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 18px 10px; position: sticky; top: 0; z-index: 20; }
 .header-row { display: flex; align-items: center; justify-content: space-between; }
 .app-title { font-size: 18px; font-weight: 600; letter-spacing: -0.3px; }
 .event-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
-.btn-icon {
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); width: 34px; height: 34px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; color: var(--muted); font-size: 16px;
-}
-
-/* TABS */
-.tabs {
-  display: flex; gap: 3px; margin-top: 10px;
-  background: var(--bg); border-radius: var(--radius-sm); padding: 3px;
-}
-.tab {
-  flex: 1; padding: 7px 4px; font-size: 12px; font-weight: 500;
-  border: none; background: transparent; color: var(--muted);
-  border-radius: 6px; cursor: pointer; font-family: 'DM Sans', sans-serif;
-  transition: all .15s;
-}
+.btn-icon { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--muted); font-size: 16px; }
+.tabs { display: flex; gap: 3px; margin-top: 10px; background: var(--bg); border-radius: var(--radius-sm); padding: 3px; }
+.tab { flex: 1; padding: 7px 2px; font-size: 11px; font-weight: 500; border: none; background: transparent; color: var(--muted); border-radius: 6px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .15s; }
 .tab.active { background: var(--surface); color: var(--text); }
+.tab.admin { color: var(--red); opacity: 0.6; }
+.tab.admin.active { color: var(--red); opacity: 1; }
 
 main { padding: 14px 14px 80px; }
 .section { display: none; }
 .section.active { display: block; }
 
-/* DAY BLOCK */
+/* ONIBUS */
 .day-block { margin-bottom: 16px; }
-.day-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 14px; border-radius: var(--radius) var(--radius) 0 0;
-  border-left: 3px solid var(--day-color, var(--accent));
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-}
+.day-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-radius: var(--radius) var(--radius) 0 0; border-left: 3px solid var(--day-color, var(--accent)); background: var(--surface); border-bottom: 1px solid var(--border); }
 .day-title { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
 .day-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--day-color, var(--accent)); flex-shrink: 0; }
 .day-meta { font-size: 12px; color: var(--muted); }
-.bus-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-  background: var(--border);
-  border-radius: 0 0 var(--radius) var(--radius);
-  overflow: hidden;
-}
-.bus-card {
-  background: var(--surface2); padding: 14px 12px; text-align: center;
-}
+.bus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: 0 0 var(--radius) var(--radius); overflow: hidden; }
+.bus-card { background: var(--surface2); padding: 14px 12px; text-align: center; }
 .bus-label { font-size: 10px; font-weight: 600; letter-spacing: 0.8px; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
 .bus-count { font-size: 26px; font-weight: 600; line-height: 1; }
 .bus-count span { font-size: 14px; font-weight: 400; color: var(--muted); }
@@ -98,8 +56,6 @@ main { padding: 14px 14px 80px; }
 .progress-bar { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; margin-bottom: 6px; }
 .progress-fill { height: 100%; border-radius: 3px; transition: width .3s; }
 .bus-free { font-size: 11px; color: var(--muted); }
-
-/* SUMMARY CARDS */
 .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
 .sum-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; text-align: center; }
 .sum-value { font-size: 20px; font-weight: 600; }
@@ -110,89 +66,63 @@ main { padding: 14px 14px 80px; }
 /* FORM */
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; }
 .form-group { margin-bottom: 12px; }
-.form-group label { display: block; font-size: 12px; font-weight: 500; color: var(--muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.4px; }
-.form-group input, .form-group select {
-  width: 100%; padding: 10px 12px; font-size: 14px;
-  font-family: 'DM Sans', sans-serif;
-  border: 1px solid var(--border); border-radius: var(--radius-sm);
-  background: var(--bg); color: var(--text); outline: none;
-  transition: border-color .15s;
-}
+.form-group label { display: block; font-size: 11px; font-weight: 600; color: var(--muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.4px; }
+.form-group input { width: 100%; padding: 10px 12px; font-size: 14px; font-family: 'DM Sans', sans-serif; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--text); outline: none; transition: border-color .15s; }
 .form-group input:focus { border-color: var(--accent); }
 .days-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
-.day-btn {
-  padding: 10px 4px; font-size: 13px; font-weight: 500;
-  border: 1px solid var(--border); border-radius: var(--radius-sm);
-  background: var(--bg); color: var(--muted);
-  cursor: pointer; text-align: center; transition: all .15s;
-  font-family: 'DM Sans', sans-serif;
-}
+.day-btn { padding: 10px 4px; font-size: 13px; font-weight: 500; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--muted); cursor: pointer; text-align: center; transition: all .15s; font-family: 'DM Sans', sans-serif; }
 .day-btn.sel-sex { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
 .day-btn.sel-sab { background: #2e1e00; border-color: var(--sab-color); color: var(--sab-color); }
 .day-btn.sel-dom { background: #1e0d2e; border-color: var(--dom-color); color: var(--dom-color); }
-.btn-primary {
-  width: 100%; padding: 12px; font-size: 14px; font-weight: 600;
-  border: none; border-radius: var(--radius-sm);
-  background: var(--accent); color: #fff;
-  cursor: pointer; font-family: 'DM Sans', sans-serif; transition: opacity .15s;
-}
+.btn-primary { width: 100%; padding: 12px; font-size: 14px; font-weight: 600; border: none; border-radius: var(--radius-sm); background: var(--accent); color: #fff; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: opacity .15s; }
 .btn-primary:hover { opacity: 0.88; }
 .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-danger-full { width: 100%; padding: 12px; font-size: 14px; font-weight: 600; border: 1px solid var(--red); border-radius: var(--radius-sm); background: transparent; color: var(--red); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .15s; margin-top: 8px; }
+.btn-danger-full:hover { background: #2e0f0f; }
 
 /* LISTA */
 .list-section { margin-bottom: 16px; }
-.list-title {
-  font-size: 11px; font-weight: 600; letter-spacing: 0.6px;
-  text-transform: uppercase; color: var(--muted);
-  padding: 0 0 8px; margin-bottom: 0;
-}
+.list-title { font-size: 11px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); padding: 0 0 8px; }
 .list-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-.list-item {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 14px; border-bottom: 1px solid var(--border);
-}
+.list-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid var(--border); gap: 8px; }
 .list-item:last-child { border-bottom: none; }
 .list-name { font-size: 13px; font-weight: 500; }
 .list-meta { font-size: 11px; color: var(--muted); margin-top: 1px; }
-.list-valor { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--green); font-weight: 500; }
-.list-num { font-size: 11px; color: var(--muted); margin-right: 10px; }
-.btn-del {
-  padding: 4px 8px; font-size: 12px;
-  border: 1px solid var(--border); border-radius: 6px;
-  background: transparent; color: var(--red); cursor: pointer;
-}
+.list-valor { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--green); font-weight: 500; white-space: nowrap; }
+.list-num { font-size: 11px; color: var(--muted); margin-right: 6px; }
+.btn-del { padding: 4px 8px; font-size: 12px; border: 1px solid var(--border); border-radius: 6px; background: transparent; color: var(--red); cursor: pointer; flex-shrink: 0; }
+.btn-edit { padding: 4px 8px; font-size: 12px; border: 1px solid var(--border); border-radius: 6px; background: transparent; color: var(--accent); cursor: pointer; flex-shrink: 0; }
+.item-actions { display: flex; gap: 6px; flex-shrink: 0; }
 
-/* MODAL */
-.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 100; align-items: flex-end; justify-content: center; }
+/* ADMIN */
+.admin-section { margin-bottom: 20px; }
+.admin-title { font-size: 11px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.danger-zone { background: var(--surface); border: 1px solid #3d1a1a; border-radius: var(--radius); padding: 16px; }
+.danger-desc { font-size: 13px; color: var(--muted); margin-bottom: 14px; line-height: 1.5; }
+.confirm-input { width: 100%; padding: 10px 12px; font-size: 14px; font-family: 'DM Sans', sans-serif; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--text); outline: none; margin-bottom: 10px; }
+.confirm-input:focus { border-color: var(--red); }
+
+/* MODAL EDIT */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 100; align-items: flex-end; justify-content: center; }
 .modal-overlay.open { display: flex; }
-.modal { background: var(--surface); border-radius: var(--radius) var(--radius) 0 0; padding: 20px 18px 40px; width: 100%; max-width: 520px; border-top: 1px solid var(--border); }
+.modal { background: var(--surface); border-radius: var(--radius) var(--radius) 0 0; padding: 20px 18px 40px; width: 100%; max-width: 520px; border-top: 1px solid var(--border); max-height: 90vh; overflow-y: auto; }
 .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
 .modal-title { font-size: 15px; font-weight: 600; }
 .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; margin-top: 16px; }
+.separator { height: 1px; background: var(--border); margin: 16px 0; }
+.valor-add-row { display: flex; gap: 8px; }
+.valor-add-row input { flex: 1; }
+.btn-add-valor { padding: 10px 16px; font-size: 13px; font-weight: 600; border: none; border-radius: var(--radius-sm); background: var(--green); color: #000; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
 
-/* TOAST */
-#toast {
-  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-  background: var(--surface2); color: var(--text);
-  border: 1px solid var(--border);
-  padding: 10px 20px; border-radius: 20px;
-  font-size: 13px; font-weight: 500;
-  opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 999;
-  white-space: nowrap;
-}
+/* CONFIG MODAL */
+#modal-cfg .modal { }
+
+#toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--surface2); color: var(--text); border: 1px solid var(--border); padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 500; opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 999; white-space: nowrap; }
 #toast.show { opacity: 1; }
-
-/* LOADING */
-#loading {
-  position: fixed; inset: 0; background: rgba(13,15,24,0.9);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 200; font-size: 14px; color: var(--muted);
-}
-
+#loading { position: fixed; inset: 0; background: rgba(13,15,24,0.92); display: flex; align-items: center; justify-content: center; z-index: 200; font-size: 14px; color: var(--muted); }
 .empty { text-align: center; padding: 36px 20px; color: var(--muted); font-size: 13px; }
 input[type=number] { -moz-appearance: textfield; }
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
+input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 </style>
 </head>
 <body>
@@ -205,22 +135,25 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
       <div class="app-title">Transporte</div>
       <div class="event-sub" id="event-label">Configure o evento</div>
     </div>
-    <button class="btn-icon" onclick="openModal()" aria-label="Configurar">&#9881;</button>
+    <button class="btn-icon" onclick="openCfg()" aria-label="Configurar">&#9881;</button>
   </div>
   <div class="tabs">
     <button class="tab active" onclick="switchTab('onibus',this)">Onibus</button>
     <button class="tab" onclick="switchTab('add',this)">+ Pessoa</button>
     <button class="tab" onclick="switchTab('nomes',this)">Nomes</button>
     <button class="tab" onclick="switchTab('valores',this)">Valores</button>
+    <button class="tab admin" onclick="switchTab('admin',this)">Admin</button>
   </div>
 </header>
 
 <main>
+  <!-- ONIBUS -->
   <div id="sec-onibus" class="section active">
     <div id="resumo-top"></div>
     <div id="onibus-content"></div>
   </div>
 
+  <!-- ADD PESSOA -->
   <div id="sec-add" class="section">
     <div class="card">
       <div class="form-group">
@@ -247,21 +180,81 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
     </div>
   </div>
 
+  <!-- NOMES -->
   <div id="sec-nomes" class="section">
     <div id="nomes-content"></div>
   </div>
 
+  <!-- VALORES -->
   <div id="sec-valores" class="section">
     <div id="valores-content"></div>
   </div>
+
+  <!-- ADMIN -->
+  <div id="sec-admin" class="section">
+    <div class="admin-section">
+      <div class="admin-title">Zona de perigo</div>
+      <div class="danger-zone">
+        <div class="danger-desc">
+          Esta acao remove <strong>todos os passageiros</strong> cadastrados permanentemente. A configuracao do evento sera mantida.<br><br>
+          Para confirmar, digite <strong>RESETAR</strong> no campo abaixo:
+        </div>
+        <input type="text" class="confirm-input" id="reset-confirm" placeholder="Digite RESETAR para confirmar" autocomplete="off" />
+        <button class="btn-danger-full" onclick="resetarDados()">Apagar todos os dados</button>
+      </div>
+    </div>
+  </div>
 </main>
 
+<!-- Modal editar passageiro -->
+<div class="modal-overlay" id="modal-edit">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Editar passageiro</span>
+      <button class="btn-icon" onclick="closeEdit()">&#10005;</button>
+    </div>
+    <div class="form-group">
+      <label>Nome completo</label>
+      <input type="text" id="edit-nome" />
+    </div>
+    <div class="form-group">
+      <label>Dias que vai</label>
+      <div class="days-grid">
+        <button class="day-btn" id="edit-btn-sex" onclick="toggleEditDay('sex')">Sexta</button>
+        <button class="day-btn" id="edit-btn-sab" onclick="toggleEditDay('sab')">Sabado</button>
+        <button class="day-btn" id="edit-btn-dom" onclick="toggleEditDay('dom')">Domingo</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Observacao</label>
+      <input type="text" id="edit-obs" />
+    </div>
+
+    <div class="separator"></div>
+    <div class="section-label">Pagamento</div>
+    <div class="form-group">
+      <label>Total pago atual (R$)</label>
+      <input type="number" id="edit-valor" min="0" step="0.01" />
+    </div>
+    <div class="form-group">
+      <label>Adicionar valor parcial (R$)</label>
+      <div class="valor-add-row">
+        <input type="number" id="edit-add-valor" placeholder="0.00" min="0" step="0.01" />
+        <button class="btn-add-valor" onclick="somarValor()">+ Somar</button>
+      </div>
+    </div>
+
+    <div class="separator"></div>
+    <button class="btn-primary" onclick="salvarEdicao()">Salvar alteracoes</button>
+  </div>
+</div>
+
 <!-- Modal config -->
-<div class="modal-overlay" id="modal">
+<div class="modal-overlay" id="modal-cfg">
   <div class="modal">
     <div class="modal-header">
       <span class="modal-title">Configurar evento</span>
-      <button class="btn-icon" onclick="closeModal()">&#10005;</button>
+      <button class="btn-icon" onclick="closeCfg()">&#10005;</button>
     </div>
     <div class="form-group">
       <label>Nome do evento</label>
@@ -270,7 +263,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
     <div class="section-label">Onibus</div>
     <div class="form-group">
       <label>Capacidade por onibus</label>
-      <input type="number" id="cfg-cap" placeholder="46" min="1" value="46" />
+      <input type="number" id="cfg-cap" placeholder="46" min="1" />
     </div>
     <div class="form-group">
       <label>Valor da passagem por onibus (R$)</label>
@@ -288,6 +281,8 @@ const API = 'https://script.google.com/macros/s/AKfycbxKEveoICa3VSttHkNRRW9cpk48
 let pessoas = [];
 let config = { nome: '', capacidade: 46, valorOnibus: 3000 };
 let selectedDays = [];
+let editingId = null;
+let editDays = [];
 
 const dayColors = { sex: '#4a90d9', sab: '#e0a030', dom: '#a060d0' };
 const dayLabels = { sex: 'Sexta', sab: 'Sabado', dom: 'Domingo' };
@@ -330,8 +325,15 @@ function toggleDay(d) {
   const i = selectedDays.indexOf(d);
   if (i===-1) selectedDays.push(d); else selectedDays.splice(i,1);
   ['sex','sab','dom'].forEach(day => {
-    const btn = document.getElementById('btn-'+day);
-    btn.className = 'day-btn' + (selectedDays.includes(day) ? ' sel-'+day : '');
+    document.getElementById('btn-'+day).className = 'day-btn' + (selectedDays.includes(day) ? ' sel-'+day : '');
+  });
+}
+
+function toggleEditDay(d) {
+  const i = editDays.indexOf(d);
+  if (i===-1) editDays.push(d); else editDays.splice(i,1);
+  ['sex','sab','dom'].forEach(day => {
+    document.getElementById('edit-btn-'+day).className = 'day-btn' + (editDays.includes(day) ? ' sel-'+day : '');
   });
 }
 
@@ -342,13 +344,13 @@ function switchTab(name, el) {
   document.getElementById('sec-'+name).classList.add('active');
 }
 
-function openModal() {
+function openCfg() {
   document.getElementById('cfg-nome').value = config.nome;
   document.getElementById('cfg-cap').value = config.capacidade;
   document.getElementById('cfg-valbus').value = config.valorOnibus;
-  document.getElementById('modal').classList.add('open');
+  document.getElementById('modal-cfg').classList.add('open');
 }
-function closeModal() { document.getElementById('modal').classList.remove('open'); }
+function closeCfg() { document.getElementById('modal-cfg').classList.remove('open'); }
 
 async function saveConfig() {
   config.nome = document.getElementById('cfg-nome').value.trim();
@@ -357,7 +359,55 @@ async function saveConfig() {
   setLoading(true, 'Salvando...');
   try {
     await fetch(API, { method:'POST', body: JSON.stringify({ action:'config', ...config }) });
-    closeModal(); showToast('Configuracao salva!'); render();
+    closeCfg(); showToast('Configuracao salva!'); render();
+  } catch(e) { showToast('Erro ao salvar'); }
+  setLoading(false);
+}
+
+function openEdit(id) {
+  const p = pessoas.find(x=>String(x.id)===String(id));
+  if (!p) return;
+  editingId = id;
+  editDays = [...p.dias];
+  document.getElementById('edit-nome').value = p.nome;
+  document.getElementById('edit-valor').value = p.valor;
+  document.getElementById('edit-obs').value = p.obs || '';
+  document.getElementById('edit-add-valor').value = '';
+  ['sex','sab','dom'].forEach(day => {
+    document.getElementById('edit-btn-'+day).className = 'day-btn' + (editDays.includes(day) ? ' sel-'+day : '');
+  });
+  document.getElementById('modal-edit').classList.add('open');
+}
+function closeEdit() { document.getElementById('modal-edit').classList.remove('open'); editingId = null; }
+
+function somarValor() {
+  const adicionar = parseFloat(document.getElementById('edit-add-valor').value) || 0;
+  if (adicionar <= 0) { showToast('Informe um valor para somar'); return; }
+  const atual = parseFloat(document.getElementById('edit-valor').value) || 0;
+  document.getElementById('edit-valor').value = (atual + adicionar).toFixed(2);
+  document.getElementById('edit-add-valor').value = '';
+  showToast('+ R$ ' + adicionar.toFixed(2).replace('.',',') + ' somado');
+}
+
+async function salvarEdicao() {
+  if (!editingId) return;
+  const nome = document.getElementById('edit-nome').value.trim();
+  const valor = parseFloat(document.getElementById('edit-valor').value) || 0;
+  const obs = document.getElementById('edit-obs').value.trim();
+  if (!nome) { showToast('Informe o nome'); return; }
+  if (editDays.length === 0) { showToast('Selecione pelo menos um dia'); return; }
+
+  setLoading(true, 'Salvando...');
+  try {
+    await fetch(API, { method:'POST', body: JSON.stringify({
+      action: 'edit', id: editingId, nome, valor, obs,
+      sexta: editDays.includes('sex'),
+      sabado: editDays.includes('sab'),
+      domingo: editDays.includes('dom')
+    })});
+    const p = pessoas.find(x=>String(x.id)===String(editingId));
+    if (p) { p.nome=nome; p.valor=valor; p.obs=obs; p.dias=[...editDays]; }
+    closeEdit(); showToast('Passageiro atualizado!'); render();
   } catch(e) { showToast('Erro ao salvar'); }
   setLoading(false);
 }
@@ -371,13 +421,7 @@ async function addPessoa() {
   const btn = document.getElementById('btn-add');
   btn.disabled = true; btn.textContent = 'Salvando...';
   setLoading(true, 'Adicionando...');
-  const payload = {
-    action:'add', id: Date.now().toString(),
-    nome, valor, obs,
-    sexta: selectedDays.includes('sex'),
-    sabado: selectedDays.includes('sab'),
-    domingo: selectedDays.includes('dom')
-  };
+  const payload = { action:'add', id: Date.now().toString(), nome, valor, obs, sexta: selectedDays.includes('sex'), sabado: selectedDays.includes('sab'), domingo: selectedDays.includes('dom') };
   try {
     await fetch(API, { method:'POST', body: JSON.stringify(payload) });
     pessoas.push({ id:payload.id, nome, valor, obs, dias:[...selectedDays] });
@@ -386,8 +430,7 @@ async function addPessoa() {
     document.getElementById('inp-obs').value = '';
     selectedDays = [];
     ['sex','sab','dom'].forEach(d=>document.getElementById('btn-'+d).className='day-btn');
-    showToast(nome + ' adicionado(a)!');
-    render();
+    showToast(nome + ' adicionado(a)!'); render();
   } catch(e) { showToast('Erro ao salvar'); }
   btn.disabled = false; btn.textContent = 'Adicionar pessoa';
   setLoading(false);
@@ -404,134 +447,84 @@ async function removePessoa(id) {
   setLoading(false);
 }
 
+async function resetarDados() {
+  const confirmVal = document.getElementById('reset-confirm').value.trim();
+  if (confirmVal !== 'RESETAR') { showToast('Digite RESETAR para confirmar'); return; }
+  if (!confirm('Tem certeza? Todos os passageiros serao removidos permanentemente.')) return;
+  setLoading(true, 'Apagando dados...');
+  try {
+    await fetch(API, { method:'POST', body: JSON.stringify({ action:'reset' }) });
+    pessoas = [];
+    document.getElementById('reset-confirm').value = '';
+    showToast('Dados resetados com sucesso'); render();
+  } catch(e) { showToast('Erro ao resetar'); }
+  setLoading(false);
+}
+
 function fmt(v) { return 'R$ ' + Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
 
 function render() {
   document.getElementById('event-label').textContent = config.nome || 'Configure o evento';
-  renderOnibus();
-  renderNomes();
-  renderValores();
+  renderOnibus(); renderNomes(); renderValores();
 }
 
 function renderOnibus() {
   const cap = config.capacidade || 46;
   const total = pessoas.length;
   const totalPago = pessoas.reduce((s,p)=>s+p.valor,0);
-
-  // resumo top
-  let topHtml = `<div class="summary-grid">
+  document.getElementById('resumo-top').innerHTML = `<div class="summary-grid">
     <div class="sum-card"><div class="sum-value accent">${total}</div><div class="sum-label">Total de pessoas</div></div>
     <div class="sum-card"><div class="sum-value green" style="font-size:15px">${fmt(totalPago)}</div><div class="sum-label">Total arrecadado</div></div>
   </div>`;
-  document.getElementById('resumo-top').innerHTML = topHtml;
-
-  if (total === 0) {
-    document.getElementById('onibus-content').innerHTML = '<div class="empty">Nenhuma pessoa cadastrada ainda.<br>Use a aba "+ Pessoa" para comecar.</div>';
-    return;
-  }
-
+  if (total === 0) { document.getElementById('onibus-content').innerHTML = '<div class="empty">Nenhuma pessoa cadastrada ainda.<br>Use a aba "+ Pessoa" para comecar.</div>'; return; }
   let html = '';
   ['sex','sab','dom'].forEach(dia => {
     const ps = pessoas.filter(p=>p.dias.includes(dia));
     if (ps.length === 0) return;
     const nBus = Math.ceil(ps.length / cap);
     const color = dayColors[dia];
-
-    html += `<div class="day-block">
-      <div class="day-header" style="--day-color:${color}">
-        <div class="day-title"><span class="day-dot"></span>${dayLabels[dia]}</div>
-        <div class="day-meta">${ps.length} passageiros &middot; ${nBus} onibus</div>
-      </div>
-      <div class="bus-grid">`;
-
+    html += `<div class="day-block"><div class="day-header" style="--day-color:${color}"><div class="day-title"><span class="day-dot"></span>${dayLabels[dia]}</div><div class="day-meta">${ps.length} passageiros &middot; ${nBus} onibus</div></div><div class="bus-grid">`;
     for (let i = 0; i < nBus; i++) {
-      const inicio = i * cap;
-      const fim = Math.min(inicio + cap, ps.length);
-      const ocupados = fim - inicio;
+      const ocupados = Math.min(cap, ps.length - i*cap);
       const livres = cap - ocupados;
-      const pct = Math.round((ocupados / cap) * 100);
+      const pct = Math.round((ocupados/cap)*100);
       const barColor = livres === 0 ? '#e05555' : '#2ecc7a';
-
-      html += `<div class="bus-card">
-        <div class="bus-label">Onibus ${i+1}</div>
-        <div class="bus-count">${ocupados}<span>/${cap}</span></div>
-        <div class="bus-sub">lugares ocupados</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${barColor}"></div></div>
-        <div class="bus-free">${livres} livre(s)</div>
-      </div>`;
+      html += `<div class="bus-card"><div class="bus-label">Onibus ${i+1}</div><div class="bus-count">${ocupados}<span>/${cap}</span></div><div class="bus-sub">lugares ocupados</div><div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${barColor}"></div></div><div class="bus-free">${livres} livre(s)</div></div>`;
     }
-
     html += `</div></div>`;
   });
-
   document.getElementById('onibus-content').innerHTML = html;
 }
 
 function renderNomes() {
-  if (pessoas.length === 0) {
-    document.getElementById('nomes-content').innerHTML = '<div class="empty">Nenhuma pessoa cadastrada.</div>';
-    return;
-  }
-  let html = '';
-
-  // Lista geral
-  html += `<div class="list-section">
-    <div class="list-title">Lista geral (${pessoas.length} pessoas)</div>
-    <div class="list-card">`;
+  if (pessoas.length === 0) { document.getElementById('nomes-content').innerHTML = '<div class="empty">Nenhuma pessoa cadastrada.</div>'; return; }
+  let html = `<div class="list-section"><div class="list-title">Lista geral (${pessoas.length} pessoas)</div><div class="list-card">`;
   pessoas.forEach((p,i) => {
     const dias = p.dias.map(d=>dayLabels[d]).join(', ');
-    html += `<div class="list-item">
-      <div>
-        <div class="list-name"><span class="list-num">${i+1}.</span>${p.nome}</div>
-        <div class="list-meta">${dias}</div>
-      </div>
-      <button class="btn-del" onclick="removePessoa('${p.id}')">&#10005;</button>
-    </div>`;
+    html += `<div class="list-item"><div><div class="list-name"><span class="list-num">${i+1}.</span>${p.nome}</div><div class="list-meta">${dias}</div></div><div class="item-actions"><button class="btn-edit" onclick="openEdit('${p.id}')">Editar</button><button class="btn-del" onclick="removePessoa('${p.id}')">&#10005;</button></div></div>`;
   });
   html += `</div></div>`;
-
-  // Por dia
   ['sex','sab','dom'].forEach(dia => {
     const ps = pessoas.filter(p=>p.dias.includes(dia));
     if (ps.length === 0) return;
-    const color = dayColors[dia];
-    html += `<div class="list-section">
-      <div class="list-title" style="color:${color}">${dayLabels[dia]} — ${ps.length} pessoas</div>
-      <div class="list-card">`;
+    html += `<div class="list-section"><div class="list-title" style="color:${dayColors[dia]}">${dayLabels[dia]} — ${ps.length} pessoas</div><div class="list-card">`;
     ps.forEach((p,i) => {
-      html += `<div class="list-item">
-        <div class="list-name"><span class="list-num">${i+1}.</span>${p.nome}</div>
-        <button class="btn-del" onclick="removePessoa('${p.id}')">&#10005;</button>
-      </div>`;
+      html += `<div class="list-item"><div class="list-name"><span class="list-num">${i+1}.</span>${p.nome}</div><button class="btn-edit" onclick="openEdit('${p.id}')">Editar</button></div>`;
     });
     html += `</div></div>`;
   });
-
   document.getElementById('nomes-content').innerHTML = html;
 }
 
 function renderValores() {
-  if (pessoas.length === 0) {
-    document.getElementById('valores-content').innerHTML = '<div class="empty">Nenhuma pessoa cadastrada.</div>';
-    return;
-  }
+  if (pessoas.length === 0) { document.getElementById('valores-content').innerHTML = '<div class="empty">Nenhuma pessoa cadastrada.</div>'; return; }
   const total = pessoas.reduce((s,p)=>s+p.valor,0);
   const ordenado = [...pessoas].sort((a,b)=>b.valor-a.valor);
-
-  let html = `<div class="list-section">
-    <div class="list-title">Contribuicoes — ${fmt(total)} total</div>
-    <div class="list-card">`;
+  let html = `<div class="list-section"><div class="list-title">Contribuicoes — ${fmt(total)} total</div><div class="list-card">`;
   ordenado.forEach((p,i) => {
-    html += `<div class="list-item">
-      <div>
-        <div class="list-name"><span class="list-num">${i+1}.</span>${p.nome}</div>
-        ${p.obs ? `<div class="list-meta">${p.obs}</div>` : ''}
-      </div>
-      <div class="list-valor">${fmt(p.valor)}</div>
-    </div>`;
+    html += `<div class="list-item"><div><div class="list-name"><span class="list-num">${i+1}.</span>${p.nome}</div>${p.obs?`<div class="list-meta">${p.obs}</div>`:''}</div><div style="display:flex;align-items:center;gap:8px"><div class="list-valor">${fmt(p.valor)}</div><button class="btn-edit" onclick="openEdit('${p.id}')">Editar</button></div></div>`;
   });
   html += `</div></div>`;
-
   document.getElementById('valores-content').innerHTML = html;
 }
 
