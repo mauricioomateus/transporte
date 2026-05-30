@@ -4,247 +4,195 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Transporte</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@500&display=swap" rel="stylesheet" />
 <style>
-  :root {
-    --bg: #0f1117;
-    --surface: #1a1d27;
-    --border: #2a2d3a;
-    --text: #e8e9f0;
-    --muted: #7a7d8e;
-    --accent: #2ecc8a;
-    --accent-light: #0d2e1f;
-    --danger: #e05555;
-    --danger-light: #2a1515;
-    --warning: #e0b04a;
-    --warning-light: #2a2010;
-    --sex: #5b9bd5;
-    --sex-light: #0d1e2e;
-    --sab: #d5a55b;
-    --sab-light: #2e1e0d;
-    --dom: #c55bd5;
-    --dom-light: #2a0d2e;
-    --radius: 12px;
-    --radius-sm: 8px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    max-width: 480px;
-    margin: 0 auto;
-  }
-  header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 20px 12px;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  .header-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-  }
-  .app-title { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
-  .event-name { font-size: 13px; color: var(--muted); margin-top: 2px; }
-  .btn-config {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    width: 36px; height: 36px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; font-size: 18px; color: var(--muted);
-    flex-shrink: 0;
-  }
-  .tabs {
-    display: flex;
-    gap: 4px;
-    margin-top: 12px;
-    background: var(--bg);
-    border-radius: var(--radius-sm);
-    padding: 3px;
-  }
-  .tab {
-    flex: 1; padding: 7px 4px;
-    font-size: 13px; font-weight: 500;
-    border: none; background: transparent;
-    color: var(--muted); border-radius: 6px;
-    cursor: pointer; transition: all .15s;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .tab.active {
-    background: var(--surface);
-    color: var(--text);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-  }
-  main { padding: 16px 16px 80px; }
-  .section { display: none; }
-  .section.active { display: block; }
-/**/
-  /* Cards */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
-    margin-bottom: 12px;
-  }
-  .card-title {
-    font-size: 13px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.5px;
-    color: var(--muted); margin-bottom: 12px;
-  }
+:root {
+  --bg: #0d0f18;
+  --surface: #161922;
+  --surface2: #1e2130;
+  --border: #272b3d;
+  --text: #e4e6f0;
+  --muted: #6b6f85;
+  --accent: #4a90d9;
+  --accent-dim: #1a2d45;
+  --green: #2ecc7a;
+  --green-dim: #0d2e1c;
+  --red: #e05555;
+  --red-dim: #2e0f0f;
+  --amber: #e0b04a;
+  --sex-color: #4a90d9;
+  --sab-color: #e0a030;
+  --dom-color: #a060d0;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  max-width: 520px;
+  margin: 0 auto;
+}
 
-  /* Stats */
-  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-  .stat {
-    background: var(--bg);
-    border-radius: var(--radius-sm);
-    padding: 12px;
-    text-align: center;
-  }
-  .stat-value { font-size: 22px; font-weight: 600; line-height: 1; }
-  .stat-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
-  .stat-value.green { color: var(--accent); }
+/* HEADER */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 18px 10px;
+  position: sticky; top: 0; z-index: 20;
+}
+.header-row { display: flex; align-items: center; justify-content: space-between; }
+.app-title { font-size: 18px; font-weight: 600; letter-spacing: -0.3px; }
+.event-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.btn-icon {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--muted); font-size: 16px;
+}
 
-  /* Day badge */
-  .badge {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 12px; font-weight: 500;
-  }
-  .badge-sex { background: var(--sex-light); color: var(--sex); }
-  .badge-sab { background: var(--sab-light); color: var(--sab); }
-  .badge-dom { background: var(--dom-light); color: var(--dom); }
+/* TABS */
+.tabs {
+  display: flex; gap: 3px; margin-top: 10px;
+  background: var(--bg); border-radius: var(--radius-sm); padding: 3px;
+}
+.tab {
+  flex: 1; padding: 7px 4px; font-size: 12px; font-weight: 500;
+  border: none; background: transparent; color: var(--muted);
+  border-radius: 6px; cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: all .15s;
+}
+.tab.active { background: var(--surface); color: var(--text); }
 
-  /* Day card */
-  .day-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    margin-bottom: 10px;
-    overflow: hidden;
-  }
-  .day-card-header {
-    padding: 12px 16px;
-    display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid var(--border);
-  }
-  .day-card-body { padding: 12px 16px; }
-  .day-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  .day-stat { text-align: center; }
-  .day-stat-value { font-size: 18px; font-weight: 600; }
-  .day-stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+main { padding: 14px 14px 80px; }
+.section { display: none; }
+.section.active { display: block; }
 
-  /* Form */
-  .form-group { margin-bottom: 14px; }
-  .form-group label { display: block; font-size: 13px; font-weight: 500; color: var(--muted); margin-bottom: 6px; }
-  .form-group input {
-    width: 100%; padding: 11px 14px;
-    font-size: 15px; font-family: 'DM Sans', sans-serif;
-    border: 1px solid var(--border); border-radius: var(--radius-sm);
-    background: #0a0c12; color: var(--text);
-    outline: none; transition: border-color .15s;
-  }
-  .form-group input:focus { border-color: var(--accent); }
-  .days-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .day-btn {
-    padding: 11px 4px; font-size: 13px; font-weight: 500;
-    border: 1px solid var(--border); border-radius: var(--radius-sm);
-    background: var(--bg); color: var(--muted);
-    cursor: pointer; text-align: center; transition: all .15s;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .day-btn.sel-sex { background: var(--sex-light); border-color: var(--sex); color: var(--sex); }
-  .day-btn.sel-sab { background: var(--sab-light); border-color: var(--sab); color: var(--sab); }
-  .day-btn.sel-dom { background: var(--dom-light); border-color: var(--dom); color: var(--dom); }
+/* DAY BLOCK */
+.day-block { margin-bottom: 16px; }
+.day-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px; border-radius: var(--radius) var(--radius) 0 0;
+  border-left: 3px solid var(--day-color, var(--accent));
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.day-title { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.day-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--day-color, var(--accent)); flex-shrink: 0; }
+.day-meta { font-size: 12px; color: var(--muted); }
+.bus-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: var(--border);
+  border-radius: 0 0 var(--radius) var(--radius);
+  overflow: hidden;
+}
+.bus-card {
+  background: var(--surface2); padding: 14px 12px; text-align: center;
+}
+.bus-label { font-size: 10px; font-weight: 600; letter-spacing: 0.8px; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+.bus-count { font-size: 26px; font-weight: 600; line-height: 1; }
+.bus-count span { font-size: 14px; font-weight: 400; color: var(--muted); }
+.bus-sub { font-size: 11px; color: var(--muted); margin-top: 4px; margin-bottom: 10px; }
+.progress-bar { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; margin-bottom: 6px; }
+.progress-fill { height: 100%; border-radius: 3px; transition: width .3s; }
+.bus-free { font-size: 11px; color: var(--muted); }
 
-  .btn-primary {
-    width: 100%; padding: 13px;
-    font-size: 15px; font-weight: 600;
-    border: none; border-radius: var(--radius-sm);
-    background: var(--accent); color: #fff;
-    cursor: pointer; font-family: 'DM Sans', sans-serif;
-    transition: opacity .15s;
-  }
-  .btn-primary:hover { opacity: 0.9; }
-  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+/* SUMMARY CARDS */
+.summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.sum-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; text-align: center; }
+.sum-value { font-size: 20px; font-weight: 600; }
+.sum-label { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.sum-value.green { color: var(--green); }
+.sum-value.accent { color: var(--accent); }
 
-  /* Lista */
-  .person-item {
-    display: flex; align-items: flex-start;
-    justify-content: space-between; gap: 10px;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .person-item:last-child { border-bottom: none; }
-  .person-name { font-weight: 500; font-size: 14px; }
-  .person-meta { font-size: 12px; color: var(--muted); margin-top: 3px; }
-  .person-valor { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); font-weight: 500; }
-  .btn-del {
-    padding: 5px 9px; font-size: 13px;
-    border: 1px solid var(--border); border-radius: var(--radius-sm);
-    background: transparent; color: var(--danger);
-    cursor: pointer; flex-shrink: 0;
-  }
+/* FORM */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; }
+.form-group { margin-bottom: 12px; }
+.form-group label { display: block; font-size: 12px; font-weight: 500; color: var(--muted); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.4px; }
+.form-group input, .form-group select {
+  width: 100%; padding: 10px 12px; font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--bg); color: var(--text); outline: none;
+  transition: border-color .15s;
+}
+.form-group input:focus { border-color: var(--accent); }
+.days-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+.day-btn {
+  padding: 10px 4px; font-size: 13px; font-weight: 500;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--bg); color: var(--muted);
+  cursor: pointer; text-align: center; transition: all .15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.day-btn.sel-sex { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+.day-btn.sel-sab { background: #2e1e00; border-color: var(--sab-color); color: var(--sab-color); }
+.day-btn.sel-dom { background: #1e0d2e; border-color: var(--dom-color); color: var(--dom-color); }
+.btn-primary {
+  width: 100%; padding: 12px; font-size: 14px; font-weight: 600;
+  border: none; border-radius: var(--radius-sm);
+  background: var(--accent); color: #fff;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; transition: opacity .15s;
+}
+.btn-primary:hover { opacity: 0.88; }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  /* Empty */
-  .empty { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 14px; }
-  .empty-icon { font-size: 36px; margin-bottom: 8px; }
+/* LISTA */
+.list-section { margin-bottom: 16px; }
+.list-title {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.6px;
+  text-transform: uppercase; color: var(--muted);
+  padding: 0 0 8px; margin-bottom: 0;
+}
+.list-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.list-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px; border-bottom: 1px solid var(--border);
+}
+.list-item:last-child { border-bottom: none; }
+.list-name { font-size: 13px; font-weight: 500; }
+.list-meta { font-size: 11px; color: var(--muted); margin-top: 1px; }
+.list-valor { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--green); font-weight: 500; }
+.list-num { font-size: 11px; color: var(--muted); margin-right: 10px; }
+.btn-del {
+  padding: 4px 8px; font-size: 12px;
+  border: 1px solid var(--border); border-radius: 6px;
+  background: transparent; color: var(--red); cursor: pointer;
+}
 
-  /* Toast */
-  #toast {
-    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-    background: var(--text); color: #fff;
-    padding: 10px 20px; border-radius: 20px;
-    font-size: 14px; font-weight: 500;
-    opacity: 0; pointer-events: none;
-    transition: opacity .2s; z-index: 999;
-    white-space: nowrap;
-  }
-  #toast.show { opacity: 1; }
+/* MODAL */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 100; align-items: flex-end; justify-content: center; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--surface); border-radius: var(--radius) var(--radius) 0 0; padding: 20px 18px 40px; width: 100%; max-width: 520px; border-top: 1px solid var(--border); }
+.modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.modal-title { font-size: 15px; font-weight: 600; }
+.section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; margin-top: 16px; }
 
-  /* Loading */
-  #loading {
-    position: fixed; inset: 0; background: rgba(245,244,240,0.85);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 200; font-size: 14px; color: var(--muted);
-  }
+/* TOAST */
+#toast {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  background: var(--surface2); color: var(--text);
+  border: 1px solid var(--border);
+  padding: 10px 20px; border-radius: 20px;
+  font-size: 13px; font-weight: 500;
+  opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 999;
+  white-space: nowrap;
+}
+#toast.show { opacity: 1; }
 
-  /* Modal */
-  .modal-overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.4); z-index: 100;
-    align-items: flex-end; justify-content: center;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    background: var(--surface);
-    border-radius: var(--radius) var(--radius) 0 0;
-    padding: 20px 20px 40px;
-    width: 100%; max-width: 480px;
-  }
-  .modal-header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 16px;
-  }
-  .modal-title { font-size: 16px; font-weight: 600; }
-  .btn-close {
-    background: var(--bg); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); width: 32px; height: 32px;
-    cursor: pointer; font-size: 16px; color: var(--muted);
-    display: flex; align-items: center; justify-content: center;
-  }
+/* LOADING */
+#loading {
+  position: fixed; inset: 0; background: rgba(13,15,24,0.9);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; font-size: 14px; color: var(--muted);
+}
 
-  .separator { height: 1px; background: var(--border); margin: 16px 0; }
-  input[type=number] { -moz-appearance: textfield; }
-  input[type=number]::-webkit-outer-spin-button,
-  input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
+.empty { text-align: center; padding: 36px 20px; color: var(--muted); font-size: 13px; }
+input[type=number] { -moz-appearance: textfield; }
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 </style>
 </head>
 <body>
@@ -252,23 +200,25 @@
 <div id="loading">Carregando...</div>
 
 <header>
-  <div class="header-top">
+  <div class="header-row">
     <div>
       <div class="app-title">Transporte</div>
-      <div class="event-name" id="event-label">Configure o evento →</div>
+      <div class="event-sub" id="event-label">Configure o evento</div>
     </div>
-    <button class="btn-config" onclick="openModal()" aria-label="Configurações">&#9881;</button>
+    <button class="btn-icon" onclick="openModal()" aria-label="Configurar">&#9881;</button>
   </div>
   <div class="tabs">
-    <button class="tab active" onclick="switchTab('resumo',this)">Resumo</button>
+    <button class="tab active" onclick="switchTab('onibus',this)">Onibus</button>
     <button class="tab" onclick="switchTab('add',this)">+ Pessoa</button>
-    <button class="tab" onclick="switchTab('lista',this)">Lista</button>
+    <button class="tab" onclick="switchTab('nomes',this)">Nomes</button>
+    <button class="tab" onclick="switchTab('valores',this)">Valores</button>
   </div>
 </header>
 
 <main>
-  <div id="sec-resumo" class="section active">
-    <div id="resumo-content"></div>
+  <div id="sec-onibus" class="section active">
+    <div id="resumo-top"></div>
+    <div id="onibus-content"></div>
   </div>
 
   <div id="sec-add" class="section">
@@ -285,20 +235,24 @@
         <label>Dias que vai</label>
         <div class="days-grid">
           <button class="day-btn" id="btn-sex" onclick="toggleDay('sex')">Sexta</button>
-          <button class="day-btn" id="btn-sab" onclick="toggleDay('sab')">Sábado</button>
+          <button class="day-btn" id="btn-sab" onclick="toggleDay('sab')">Sabado</button>
           <button class="day-btn" id="btn-dom" onclick="toggleDay('dom')">Domingo</button>
         </div>
       </div>
       <div class="form-group">
-        <label>Observação (opcional)</label>
-        <input type="text" id="inp-obs" placeholder="Ex: pagou metade, meia entrada..." />
+        <label>Observacao (opcional)</label>
+        <input type="text" id="inp-obs" placeholder="Ex: pagou metade..." />
       </div>
       <button class="btn-primary" id="btn-add" onclick="addPessoa()">Adicionar pessoa</button>
     </div>
   </div>
 
-  <div id="sec-lista" class="section">
-    <div id="lista-content"></div>
+  <div id="sec-nomes" class="section">
+    <div id="nomes-content"></div>
+  </div>
+
+  <div id="sec-valores" class="section">
+    <div id="valores-content"></div>
   </div>
 </main>
 
@@ -307,21 +261,22 @@
   <div class="modal">
     <div class="modal-header">
       <span class="modal-title">Configurar evento</span>
-      <button class="btn-close" onclick="closeModal()">&#10005;</button>
+      <button class="btn-icon" onclick="closeModal()">&#10005;</button>
     </div>
     <div class="form-group">
       <label>Nome do evento</label>
-      <input type="text" id="cfg-nome" placeholder="Ex: Viagem junho 2025" />
+      <input type="text" id="cfg-nome" placeholder="Ex: Congresso junho 2026" />
+    </div>
+    <div class="section-label">Onibus</div>
+    <div class="form-group">
+      <label>Capacidade por onibus</label>
+      <input type="number" id="cfg-cap" placeholder="46" min="1" value="46" />
     </div>
     <div class="form-group">
-      <label>Capacidade do ônibus (pessoas)</label>
-      <input type="number" id="cfg-cap" placeholder="44" min="1" />
+      <label>Valor da passagem por onibus (R$)</label>
+      <input type="number" id="cfg-valbus" placeholder="3000" min="0" step="0.01" />
     </div>
-    <div class="form-group">
-      <label>Valor por ônibus (R$)</label>
-      <input type="number" id="cfg-valor" placeholder="3000" min="0" step="0.01" />
-    </div>
-    <button class="btn-primary" onclick="saveConfig()">Salvar configuração</button>
+    <button class="btn-primary" onclick="saveConfig()">Salvar</button>
   </div>
 </div>
 
@@ -331,66 +286,49 @@
 const API = 'https://script.google.com/macros/s/AKfycbxKEveoICa3VSttHkNRRW9cpk48GYtkE_W5puMRQsCMlSvooF9tvJdRr7WfzA3WdJRE/exec';
 
 let pessoas = [];
-let config = { nome: '', capacidade: 44, valorOnibus: 3000 };
+let config = { nome: '', capacidade: 46, valorOnibus: 3000 };
 let selectedDays = [];
+
+const dayColors = { sex: '#4a90d9', sab: '#e0a030', dom: '#a060d0' };
+const dayLabels = { sex: 'Sexta', sab: 'Sabado', dom: 'Domingo' };
 
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+  t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
 }
-
 function setLoading(show, msg='Carregando...') {
   const el = document.getElementById('loading');
   el.style.display = show ? 'flex' : 'none';
   el.textContent = msg;
 }
 
-async function api(method, body) {
-  if (method === 'GET') {
-    const r = await fetch(API);
-    return r.json();
-  }
-  return fetch(API, {
-    method: 'POST',
-    body: JSON.stringify(body)
-  }).then(r => r.json());
-}
-
 async function loadData() {
   setLoading(true);
   try {
-    // load config
     const cfg = await fetch(API, { method:'POST', body: JSON.stringify({action:'getConfig'})}).then(r=>r.json());
     if (cfg.nome) config.nome = cfg.nome;
     if (cfg.capacidade) config.capacidade = Number(cfg.capacidade);
     if (cfg.valorOnibus) config.valorOnibus = Number(cfg.valorOnibus);
-
-    // load pessoas
     const data = await fetch(API).then(r=>r.json());
     pessoas = Array.isArray(data) ? data.map(row => ({
-      id: row['ID'],
-      nome: row['Nome'],
+      id: row['ID'], nome: row['Nome'],
       valor: Number(row['Valor']) || 0,
       dias: [
-        row['Sexta'] === 'TRUE' || row['Sexta'] === true ? 'sex' : null,
-        row['Sabado'] === 'TRUE' || row['Sabado'] === true ? 'sab' : null,
-        row['Domingo'] === 'TRUE' || row['Domingo'] === true ? 'dom' : null,
+        row['Sexta']==='TRUE'||row['Sexta']===true?'sex':null,
+        row['Sabado']==='TRUE'||row['Sabado']===true?'sab':null,
+        row['Domingo']==='TRUE'||row['Domingo']===true?'dom':null,
       ].filter(Boolean),
-      obs: row['Obs'] || ''
-    })).filter(p => p.nome) : [];
-  } catch(e) {
-    showToast('Erro ao carregar dados');
-  }
+      obs: row['Obs']||''
+    })).filter(p=>p.nome) : [];
+  } catch(e) { showToast('Erro ao carregar dados'); }
   setLoading(false);
   render();
 }
 
 function toggleDay(d) {
   const i = selectedDays.indexOf(d);
-  if (i === -1) selectedDays.push(d);
-  else selectedDays.splice(i, 1);
+  if (i===-1) selectedDays.push(d); else selectedDays.splice(i,1);
   ['sex','sab','dom'].forEach(day => {
     const btn = document.getElementById('btn-'+day);
     btn.className = 'day-btn' + (selectedDays.includes(day) ? ' sel-'+day : '');
@@ -398,8 +336,8 @@ function toggleDay(d) {
 }
 
 function switchTab(name, el) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   el.classList.add('active');
   document.getElementById('sec-'+name).classList.add('active');
 }
@@ -407,21 +345,19 @@ function switchTab(name, el) {
 function openModal() {
   document.getElementById('cfg-nome').value = config.nome;
   document.getElementById('cfg-cap').value = config.capacidade;
-  document.getElementById('cfg-valor').value = config.valorOnibus;
+  document.getElementById('cfg-valbus').value = config.valorOnibus;
   document.getElementById('modal').classList.add('open');
 }
 function closeModal() { document.getElementById('modal').classList.remove('open'); }
 
 async function saveConfig() {
   config.nome = document.getElementById('cfg-nome').value.trim();
-  config.capacidade = parseInt(document.getElementById('cfg-cap').value) || 44;
-  config.valorOnibus = parseFloat(document.getElementById('cfg-valor').value) || 3000;
+  config.capacidade = parseInt(document.getElementById('cfg-cap').value) || 46;
+  config.valorOnibus = parseFloat(document.getElementById('cfg-valbus').value) || 3000;
   setLoading(true, 'Salvando...');
   try {
     await fetch(API, { method:'POST', body: JSON.stringify({ action:'config', ...config }) });
-    closeModal();
-    showToast('Configuração salva!');
-    render();
+    closeModal(); showToast('Configuracao salva!'); render();
   } catch(e) { showToast('Erro ao salvar'); }
   setLoading(false);
 }
@@ -432,38 +368,28 @@ async function addPessoa() {
   const obs = document.getElementById('inp-obs').value.trim();
   if (!nome) { showToast('Informe o nome'); return; }
   if (selectedDays.length === 0) { showToast('Selecione pelo menos um dia'); return; }
-
   const btn = document.getElementById('btn-add');
-  btn.disabled = true;
-  btn.textContent = 'Salvando...';
-  setLoading(true, 'Adicionando pessoa...');
-
+  btn.disabled = true; btn.textContent = 'Salvando...';
+  setLoading(true, 'Adicionando...');
   const payload = {
-    action: 'add',
-    id: Date.now().toString(),
+    action:'add', id: Date.now().toString(),
     nome, valor, obs,
     sexta: selectedDays.includes('sex'),
     sabado: selectedDays.includes('sab'),
     domingo: selectedDays.includes('dom')
   };
-
   try {
     await fetch(API, { method:'POST', body: JSON.stringify(payload) });
-    pessoas.push({
-      id: payload.id, nome, valor, obs,
-      dias: selectedDays.slice()
-    });
+    pessoas.push({ id:payload.id, nome, valor, obs, dias:[...selectedDays] });
     document.getElementById('inp-nome').value = '';
     document.getElementById('inp-valor').value = '';
     document.getElementById('inp-obs').value = '';
     selectedDays = [];
-    ['sex','sab','dom'].forEach(d => document.getElementById('btn-'+d).className='day-btn');
+    ['sex','sab','dom'].forEach(d=>document.getElementById('btn-'+d).className='day-btn');
     showToast(nome + ' adicionado(a)!');
     render();
   } catch(e) { showToast('Erro ao salvar'); }
-
-  btn.disabled = false;
-  btn.textContent = 'Adicionar pessoa';
+  btn.disabled = false; btn.textContent = 'Adicionar pessoa';
   setLoading(false);
 }
 
@@ -472,106 +398,141 @@ async function removePessoa(id) {
   setLoading(true, 'Removendo...');
   try {
     await fetch(API, { method:'POST', body: JSON.stringify({ action:'delete', id }) });
-    pessoas = pessoas.filter(p => String(p.id) !== String(id));
-    showToast('Pessoa removida');
-    render();
+    pessoas = pessoas.filter(p=>String(p.id)!==String(id));
+    showToast('Pessoa removida'); render();
   } catch(e) { showToast('Erro ao remover'); }
   setLoading(false);
 }
 
-const dayLabel = { sex:'Sexta', sab:'Sábado', dom:'Domingo' };
-const dayColors = {
-  sex: { badge:'badge-sex', header:'#e8f0f5', text:'#1a4a6b' },
-  sab: { badge:'badge-sab', header:'#f5f0e8', text:'#6b4a1a' },
-  dom: { badge:'badge-dom', header:'#f5e8f0', text:'#6b1a4a' }
-};
-
-function fmt(v) { return 'R$ ' + Number(v).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+function fmt(v) { return 'R$ ' + Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
 
 function render() {
-  document.getElementById('event-label').textContent = config.nome || 'Configure o evento →';
-  renderResumo();
-  renderLista();
+  document.getElementById('event-label').textContent = config.nome || 'Configure o evento';
+  renderOnibus();
+  renderNomes();
+  renderValores();
 }
 
-function renderResumo() {
+function renderOnibus() {
+  const cap = config.capacidade || 46;
   const total = pessoas.length;
-  const totalPago = pessoas.reduce((s,p) => s + p.valor, 0);
-  const cap = config.capacidade || 44;
-  const vbus = config.valorOnibus || 3000;
+  const totalPago = pessoas.reduce((s,p)=>s+p.valor,0);
+
+  // resumo top
+  let topHtml = `<div class="summary-grid">
+    <div class="sum-card"><div class="sum-value accent">${total}</div><div class="sum-label">Total de pessoas</div></div>
+    <div class="sum-card"><div class="sum-value green" style="font-size:15px">${fmt(totalPago)}</div><div class="sum-label">Total arrecadado</div></div>
+  </div>`;
+  document.getElementById('resumo-top').innerHTML = topHtml;
 
   if (total === 0) {
-    document.getElementById('resumo-content').innerHTML = `
-      <div class="empty">
-        <div class="empty-icon">—</div>
-        Nenhuma pessoa adicionada ainda.<br>Use a aba "+ Pessoa" para começar.
-      </div>`;
-    return;
-  }
-
-  let html = `<div class="stats-grid">
-    <div class="stat"><div class="stat-value">${total}</div><div class="stat-label">Total de pessoas</div></div>
-    <div class="stat"><div class="stat-value green" style="font-size:16px">${fmt(totalPago)}</div><div class="stat-label">Total arrecadado</div></div>
-  </div>`;
-
-  ['sex','sab','dom'].forEach(dia => {
-    const ps = pessoas.filter(p => p.dias.includes(dia));
-    if (ps.length === 0) return;
-    const nBus = Math.ceil(ps.length / cap);
-    const excedente = ps.length % cap === 0 ? 0 : cap - (ps.length % cap);
-    const custo = nBus * vbus;
-    const c = dayColors[dia];
-
-    html += `<div class="day-card">
-      <div class="day-card-header" style="background:${c.header}">
-        <span class="badge badge-${dia}">${dayLabel[dia]}</span>
-        <span style="font-size:12px;color:${c.text};font-weight:500">${ps.length} pessoa${ps.length>1?'s':''}</span>
-      </div>
-      <div class="day-card-body">
-        <div class="day-stats">
-          <div class="day-stat"><div class="day-stat-value">${nBus}</div><div class="day-stat-label">Ônibus necessários</div></div>
-          <div class="day-stat"><div class="day-stat-value" style="font-size:14px">${fmt(custo)}</div><div class="day-stat-label">Custo total</div></div>
-          <div class="day-stat"><div class="day-stat-value">${excedente}</div><div class="day-stat-label">Vagas sobrando</div></div>
-          <div class="day-stat"><div class="day-stat-value">${cap}</div><div class="day-stat-label">Cap. por ônibus</div></div>
-        </div>
-      </div>
-    </div>`;
-  });
-
-  document.getElementById('resumo-content').innerHTML = html;
-}
-
-function renderLista() {
-  if (pessoas.length === 0) {
-    document.getElementById('lista-content').innerHTML = '<div class="empty"><div class="empty-icon">—</div>Nenhuma pessoa cadastrada.</div>';
+    document.getElementById('onibus-content').innerHTML = '<div class="empty">Nenhuma pessoa cadastrada ainda.<br>Use a aba "+ Pessoa" para comecar.</div>';
     return;
   }
 
   let html = '';
   ['sex','sab','dom'].forEach(dia => {
-    const ps = pessoas.filter(p => p.dias.includes(dia));
+    const ps = pessoas.filter(p=>p.dias.includes(dia));
     if (ps.length === 0) return;
-    const c = dayColors[dia];
-    html += `<div class="card" style="padding:0;overflow:hidden">
-      <div style="background:${c.header};padding:10px 16px;display:flex;justify-content:space-between;align-items:center">
-        <span class="badge badge-${dia}">${dayLabel[dia]}</span>
-        <span style="font-size:12px;color:${c.text};font-weight:500">${ps.length} pessoa${ps.length>1?'s':''}</span>
+    const nBus = Math.ceil(ps.length / cap);
+    const color = dayColors[dia];
+
+    html += `<div class="day-block">
+      <div class="day-header" style="--day-color:${color}">
+        <div class="day-title"><span class="day-dot"></span>${dayLabels[dia]}</div>
+        <div class="day-meta">${ps.length} passageiros &middot; ${nBus} onibus</div>
       </div>
-      <div style="padding:0 16px">`;
-    ps.forEach(p => {
-      const outrosDias = p.dias.filter(d=>d!==dia).map(d=>dayLabel[d]).join(', ');
-      html += `<div class="person-item">
-        <div>
-          <div class="person-name">${p.nome}</div>
-          <div class="person-meta">${fmt(p.valor)}${outrosDias?' · '+outrosDias:''}${p.obs?' · '+p.obs:''}</div>
-        </div>
+      <div class="bus-grid">`;
+
+    for (let i = 0; i < nBus; i++) {
+      const inicio = i * cap;
+      const fim = Math.min(inicio + cap, ps.length);
+      const ocupados = fim - inicio;
+      const livres = cap - ocupados;
+      const pct = Math.round((ocupados / cap) * 100);
+      const barColor = livres === 0 ? '#e05555' : '#2ecc7a';
+
+      html += `<div class="bus-card">
+        <div class="bus-label">Onibus ${i+1}</div>
+        <div class="bus-count">${ocupados}<span>/${cap}</span></div>
+        <div class="bus-sub">lugares ocupados</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${barColor}"></div></div>
+        <div class="bus-free">${livres} livre(s)</div>
+      </div>`;
+    }
+
+    html += `</div></div>`;
+  });
+
+  document.getElementById('onibus-content').innerHTML = html;
+}
+
+function renderNomes() {
+  if (pessoas.length === 0) {
+    document.getElementById('nomes-content').innerHTML = '<div class="empty">Nenhuma pessoa cadastrada.</div>';
+    return;
+  }
+  let html = '';
+
+  // Lista geral
+  html += `<div class="list-section">
+    <div class="list-title">Lista geral (${pessoas.length} pessoas)</div>
+    <div class="list-card">`;
+  pessoas.forEach((p,i) => {
+    const dias = p.dias.map(d=>dayLabels[d]).join(', ');
+    html += `<div class="list-item">
+      <div>
+        <div class="list-name"><span class="list-num">${i+1}.</span>${p.nome}</div>
+        <div class="list-meta">${dias}</div>
+      </div>
+      <button class="btn-del" onclick="removePessoa('${p.id}')">&#10005;</button>
+    </div>`;
+  });
+  html += `</div></div>`;
+
+  // Por dia
+  ['sex','sab','dom'].forEach(dia => {
+    const ps = pessoas.filter(p=>p.dias.includes(dia));
+    if (ps.length === 0) return;
+    const color = dayColors[dia];
+    html += `<div class="list-section">
+      <div class="list-title" style="color:${color}">${dayLabels[dia]} — ${ps.length} pessoas</div>
+      <div class="list-card">`;
+    ps.forEach((p,i) => {
+      html += `<div class="list-item">
+        <div class="list-name"><span class="list-num">${i+1}.</span>${p.nome}</div>
         <button class="btn-del" onclick="removePessoa('${p.id}')">&#10005;</button>
       </div>`;
     });
     html += `</div></div>`;
   });
 
-  document.getElementById('lista-content').innerHTML = html;
+  document.getElementById('nomes-content').innerHTML = html;
+}
+
+function renderValores() {
+  if (pessoas.length === 0) {
+    document.getElementById('valores-content').innerHTML = '<div class="empty">Nenhuma pessoa cadastrada.</div>';
+    return;
+  }
+  const total = pessoas.reduce((s,p)=>s+p.valor,0);
+  const ordenado = [...pessoas].sort((a,b)=>b.valor-a.valor);
+
+  let html = `<div class="list-section">
+    <div class="list-title">Contribuicoes — ${fmt(total)} total</div>
+    <div class="list-card">`;
+  ordenado.forEach((p,i) => {
+    html += `<div class="list-item">
+      <div>
+        <div class="list-name"><span class="list-num">${i+1}.</span>${p.nome}</div>
+        ${p.obs ? `<div class="list-meta">${p.obs}</div>` : ''}
+      </div>
+      <div class="list-valor">${fmt(p.valor)}</div>
+    </div>`;
+  });
+  html += `</div></div>`;
+
+  document.getElementById('valores-content').innerHTML = html;
 }
 
 loadData();
