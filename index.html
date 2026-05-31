@@ -144,6 +144,7 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
     <div>
       <div class="app-title">Transporte</div>
       <div class="event-sub" id="event-label">Configure o evento</div>
+      <div class="event-sub" id="last-update" style="margin-top:1px"></div>
     </div>
     <button class="btn-icon" onclick="openCfg()" aria-label="Configurar">&#9881;</button>
   </div>
@@ -308,6 +309,20 @@ function setLoading(show, msg='Carregando...') {
   el.textContent = msg;
 }
 
+function saveTimestamp() {
+  const now = new Date();
+  const str = 'Atualizado ' + now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+  try { localStorage.setItem('transporte-lastupdate', str); } catch(e) {}
+  document.getElementById('last-update').textContent = str;
+}
+
+function loadTimestamp() {
+  try {
+    const str = localStorage.getItem('transporte-lastupdate');
+    if (str) document.getElementById('last-update').textContent = str;
+  } catch(e) {}
+}
+
 async function loadData() {
   setLoading(true);
   try {
@@ -417,7 +432,7 @@ async function salvarEdicao() {
     })});
     const p = pessoas.find(x=>String(x.id)===String(editingId));
     if (p) { p.nome=nome; p.valor=valor; p.obs=obs; p.dias=[...editDays]; }
-    closeEdit(); showToast('Passageiro atualizado!'); render();
+    saveTimestamp(); closeEdit(); showToast('Passageiro atualizado!'); render();
   } catch(e) { showToast('Erro ao salvar'); }
   setLoading(false);
 }
@@ -440,7 +455,7 @@ async function addPessoa() {
     document.getElementById('inp-obs').value = '';
     selectedDays = [];
     ['sex','sab','dom'].forEach(d=>document.getElementById('btn-'+d).className='day-btn');
-    showToast(nome + ' adicionado(a)!'); render();
+    saveTimestamp(); showToast(nome + ' adicionado(a)!'); render();
   } catch(e) { showToast('Erro ao salvar'); }
   btn.disabled = false; btn.textContent = 'Adicionar pessoa';
   setLoading(false);
@@ -452,7 +467,7 @@ async function removePessoa(id) {
   try {
     await fetch(API, { method:'POST', body: JSON.stringify({ action:'delete', id }) });
     pessoas = pessoas.filter(p=>String(p.id)!==String(id));
-    showToast('Pessoa removida'); render();
+    saveTimestamp(); showToast('Pessoa removida'); render();
   } catch(e) { showToast('Erro ao remover'); }
   setLoading(false);
 }
@@ -466,7 +481,7 @@ async function resetarDados() {
     await fetch(API, { method:'POST', body: JSON.stringify({ action:'reset' }) });
     pessoas = [];
     document.getElementById('reset-confirm').value = '';
-    showToast('Dados resetados com sucesso'); render();
+    saveTimestamp(); showToast('Dados resetados com sucesso'); render();
   } catch(e) { showToast('Erro ao resetar'); }
   setLoading(false);
 }
@@ -562,6 +577,7 @@ function renderValores() {
   document.getElementById('valores-content').innerHTML = html;
 }
 
+loadTimestamp();
 loadData();
 </script>
 </body>
