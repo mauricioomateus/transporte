@@ -35,6 +35,8 @@ header { background: var(--surface); border-bottom: 1px solid var(--border); pad
 .tab { flex: 1; padding: 7px 2px; font-size: 11px; font-weight: 500; border: none; background: transparent; color: var(--muted); border-radius: 6px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .15s; }
 .tab.active { background: var(--surface); color: var(--text); }
 .tab.admin { color: var(--red); opacity: 0.6; }
+.tab.tab-add { color: var(--green); font-weight: 600; }
+.tab.tab-add.active { background: var(--green); color: #000; }
 .tab.admin.active { color: var(--red); opacity: 1; }
 
 main { padding: 14px 14px 80px; }
@@ -74,7 +76,9 @@ main { padding: 14px 14px 80px; }
 .day-btn.sel-sex { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
 .day-btn.sel-sab { background: #2e1e00; border-color: var(--sab-color); color: var(--sab-color); }
 .day-btn.sel-dom { background: #1e0d2e; border-color: var(--dom-color); color: var(--dom-color); }
-.btn-primary { width: 100%; padding: 12px; font-size: 14px; font-weight: 600; border: none; border-radius: var(--radius-sm); background: var(--accent); color: #fff; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: opacity .15s; }
+.btn-primary { width: 100%; padding: 12px; font-size: 14px; font-weight: 600; border: none; border-radius: var(--radius-sm); background: var(--accent); color: #fff; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .15s; }
+.btn-primary.highlight { background: var(--green); color: #000; font-size: 15px; padding: 14px; box-shadow: 0 0 20px rgba(46,204,122,0.3); }
+.btn-primary.highlight:hover { box-shadow: 0 0 28px rgba(46,204,122,0.5); transform: translateY(-1px); }
 .btn-primary:hover { opacity: 0.88; }
 .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
 .btn-danger-full { width: 100%; padding: 12px; font-size: 14px; font-weight: 600; border: 1px solid var(--red); border-radius: var(--radius-sm); background: transparent; color: var(--red); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .15s; margin-top: 8px; }
@@ -123,6 +127,12 @@ main { padding: 14px 14px 80px; }
 .empty { text-align: center; padding: 36px 20px; color: var(--muted); font-size: 13px; }
 input[type=number] { -moz-appearance: textfield; }
 input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
+.collapsible-header { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 10px 0 8px; user-select: none; }
+.collapsible-header .list-title { padding: 0; margin: 0; }
+.collapsible-arrow { font-size: 12px; color: var(--muted); transition: transform .2s; }
+.collapsible-arrow.open { transform: rotate(180deg); }
+.collapsible-body { overflow: hidden; transition: max-height .3s ease; max-height: 0; }
+.collapsible-body.open { max-height: 9999px; }
 </style>
 </head>
 <body>
@@ -139,7 +149,7 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
   </div>
   <div class="tabs">
     <button class="tab active" onclick="switchTab('onibus',this)">Onibus</button>
-    <button class="tab" onclick="switchTab('add',this)">+ Pessoa</button>
+    <button class="tab tab-add" onclick="switchTab('add',this)">+ Pessoa</button>
     <button class="tab" onclick="switchTab('nomes',this)">Nomes</button>
     <button class="tab" onclick="switchTab('valores',this)">Valores</button>
     <button class="tab admin" onclick="switchTab('admin',this)">Admin</button>
@@ -496,23 +506,47 @@ function renderOnibus() {
   document.getElementById('onibus-content').innerHTML = html;
 }
 
+function toggleCollapse(id) {
+  const body = document.getElementById('col-body-'+id);
+  const arrow = document.getElementById('col-arrow-'+id);
+  body.classList.toggle('open');
+  arrow.classList.toggle('open');
+}
+
 function renderNomes() {
   if (pessoas.length === 0) { document.getElementById('nomes-content').innerHTML = '<div class="empty">Nenhuma pessoa cadastrada.</div>'; return; }
-  let html = `<div class="list-section"><div class="list-title">Lista geral (${pessoas.length} pessoas)</div><div class="list-card">`;
+  
+  // Lista geral — começa aberta
+  let html = `<div class="list-section">
+    <div class="collapsible-header" onclick="toggleCollapse('geral')">
+      <div class="list-title">Lista geral (${pessoas.length} pessoas)</div>
+      <span class="collapsible-arrow open" id="col-arrow-geral">&#9650;</span>
+    </div>
+    <div class="collapsible-body open" id="col-body-geral">
+      <div class="list-card">`;
   pessoas.forEach((p,i) => {
     const dias = p.dias.map(d=>dayLabels[d]).join(', ');
     html += `<div class="list-item"><div><div class="list-name"><span class="list-num">${i+1}.</span>${p.nome}</div><div class="list-meta">${dias}</div></div><div class="item-actions"><button class="btn-edit" onclick="openEdit('${p.id}')">Editar</button><button class="btn-del" onclick="removePessoa('${p.id}')">&#10005;</button></div></div>`;
   });
-  html += `</div></div>`;
+  html += `</div></div></div>`;
+
+  // Por dia — começa fechado
   ['sex','sab','dom'].forEach(dia => {
     const ps = pessoas.filter(p=>p.dias.includes(dia));
     if (ps.length === 0) return;
-    html += `<div class="list-section"><div class="list-title" style="color:${dayColors[dia]}">${dayLabels[dia]} — ${ps.length} pessoas</div><div class="list-card">`;
+    html += `<div class="list-section">
+      <div class="collapsible-header" onclick="toggleCollapse('${dia}')">
+        <div class="list-title" style="color:${dayColors[dia]}">${dayLabels[dia]} — ${ps.length} pessoas</div>
+        <span class="collapsible-arrow" id="col-arrow-${dia}">&#9650;</span>
+      </div>
+      <div class="collapsible-body" id="col-body-${dia}">
+        <div class="list-card">`;
     ps.forEach((p,i) => {
       html += `<div class="list-item"><div class="list-name"><span class="list-num">${i+1}.</span>${p.nome}</div><button class="btn-edit" onclick="openEdit('${p.id}')">Editar</button></div>`;
     });
-    html += `</div></div>`;
+    html += `</div></div></div>`;
   });
+
   document.getElementById('nomes-content').innerHTML = html;
 }
 
