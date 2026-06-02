@@ -133,6 +133,11 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
 .collapsible-arrow.open { transform: rotate(180deg); }
 .collapsible-body { overflow: hidden; transition: max-height .3s ease; max-height: 0; }
 .collapsible-body.open { max-height: 9999px; }
+.search-wrap { position: relative; margin-bottom: 14px; }
+.search-input { width: 100%; padding: 11px 38px 11px 14px; font-size: 14px; font-family: 'DM Sans', sans-serif; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); outline: none; transition: border-color .15s; }
+.search-input:focus { border-color: var(--accent); }
+.search-clear { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; border: none; background: var(--surface2); border-radius: 50%; color: var(--muted); cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+.highlight-match { background: rgba(74,144,217,0.3); border-radius: 3px; padding: 0 2px; }
 </style>
 </head>
 <body>
@@ -193,6 +198,10 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
 
   <!-- NOMES -->
   <div id="sec-nomes" class="section">
+    <div class="search-wrap">
+      <input type="text" id="search-input" class="search-input" placeholder="Buscar por nome..." autocomplete="off" oninput="renderNomes()" />
+      <button class="search-clear" id="search-clear" onclick="limparBusca()" style="display:none">&#10005;</button>
+    </div>
     <div id="nomes-content"></div>
   </div>
 
@@ -528,36 +537,68 @@ function toggleCollapse(id) {
   arrow.classList.toggle('open');
 }
 
+function limparBusca() {
+  document.getElementById('search-input').value = '';
+  renderNomes();
+}
+
+function normalize(str) {
+  return String(str).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function highlightNome(nome, termo) {
+  if (!termo) return nome;
+  const nomeNorm = normalize(nome);
+  const termoNorm = normalize(termo);
+  const idx = nomeNorm.indexOf(termoNorm);
+  if (idx === -1) return nome;
+  return nome.substring(0, idx) + '<span class="highlight-match">' + nome.substring(idx, idx + termo.length) + '</span>' + nome.substring(idx + termo.length);
+}
+
 function renderNomes() {
   if (pessoas.length === 0) { document.getElementById('nomes-content').innerHTML = '<div class="empty">Nenhuma pessoa cadastrada.</div>'; return; }
-  
+
+  const searchInput = document.getElementById('search-input');
+  const termo = searchInput ? searchInput.value.trim() : '';
+  const clearBtn = document.getElementById('search-clear');
+  if (clearBtn) clearBtn.style.display = termo ? 'flex' : 'none';
+
+  const filtrados = termo
+    ? pessoas.filter(p => normalize(p.nome).includes(normalize(termo)))
+    : pessoas;
+
+  if (filtrados.length === 0) {
+    document.getElementById('nomes-content').innerHTML = '<div class="empty">Nenhum nome encontrado para "' + termo + '".</div>';
+    return;
+  }
+
   // Lista geral — começa aberta
   let html = `<div class="list-section">
     <div class="collapsible-header" onclick="toggleCollapse('geral')">
-      <div class="list-title">Lista geral (${pessoas.length} pessoas)</div>
+      <div class="list-title">Lista geral (${filtrados.length}${termo ? ' de '+pessoas.length : ''} pessoas)</div>
       <span class="collapsible-arrow open" id="col-arrow-geral">&#9650;</span>
     </div>
     <div class="collapsible-body open" id="col-body-geral">
       <div class="list-card">`;
-  pessoas.forEach((p,i) => {
+  filtrados.forEach((p,i) => {
     const dias = p.dias.map(d=>dayLabels[d]).join(', ');
-    html += `<div class="list-item"><div><div class="list-name"><span class="list-num">${i+1}.</span>${p.nome}</div><div class="list-meta">${dias}</div></div><div class="item-actions"><button class="btn-edit" onclick="openEdit('${p.id}')">Editar</button><button class="btn-del" onclick="removePessoa('${p.id}')">&#10005;</button></div></div>`;
+    html += `<div class="list-item"><div><div class="list-name"><span class="list-num">${i+1}.</span>${highlightNome(p.nome, termo)}</div><div class="list-meta">${dias}</div></div><div class="item-actions"><button class="btn-edit" onclick="openEdit('${p.id}')">Editar</button><button class="btn-del" onclick="removePessoa('${p.id}')">&#10005;</button></div></div>`;
   });
   html += `</div></div></div>`;
 
-  // Por dia — começa fechado
+  // Por dia — começa fechado (também filtrado pela busca)
   ['sex','sab','dom'].forEach(dia => {
-    const ps = pessoas.filter(p=>p.dias.includes(dia));
+    const ps = filtrados.filter(p=>p.dias.includes(dia));
     if (ps.length === 0) return;
     html += `<div class="list-section">
       <div class="collapsible-header" onclick="toggleCollapse('${dia}')">
         <div class="list-title" style="color:${dayColors[dia]}">${dayLabels[dia]} — ${ps.length} pessoas</div>
-        <span class="collapsible-arrow" id="col-arrow-${dia}">&#9650;</span>
+        <span class="collapsible-arrow${termo ? ' open' : ''}" id="col-arrow-${dia}">&#9650;</span>
       </div>
-      <div class="collapsible-body" id="col-body-${dia}">
+      <div class="collapsible-body${termo ? ' open' : ''}" id="col-body-${dia}">
         <div class="list-card">`;
     ps.forEach((p,i) => {
-      html += `<div class="list-item"><div class="list-name"><span class="list-num">${i+1}.</span>${p.nome}</div><button class="btn-edit" onclick="openEdit('${p.id}')">Editar</button></div>`;
+      html += `<div class="list-item"><div class="list-name"><span class="list-num">${i+1}.</span>${highlightNome(p.nome, termo)}</div><button class="btn-edit" onclick="openEdit('${p.id}')">Editar</button></div>`;
     });
     html += `</div></div></div>`;
   });
