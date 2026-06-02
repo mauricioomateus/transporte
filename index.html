@@ -24,7 +24,7 @@
   --radius-sm: 8px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; max-width: 520px; margin: 0 auto; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; max-width: 520px; margin: 0 auto; transition: max-width .2s; }
 
 header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 18px 10px; position: sticky; top: 0; z-index: 20; }
 .header-row { display: flex; align-items: center; justify-content: space-between; }
@@ -45,6 +45,18 @@ main { padding: 14px 14px 80px; }
 
 /* ONIBUS */
 .day-block { margin-bottom: 16px; }
+.onibus-grid { display: block; }
+@media (min-width: 700px) {
+  body { max-width: 1000px; }
+  header { max-width: 1000px; }
+  .modal { max-width: 1000px; }
+  .onibus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
+  .onibus-grid .day-block { margin-bottom: 0; }
+  .search-wrap, #resumo-top { grid-column: 1 / -1; }
+}
+@media (min-width: 1000px) {
+  .onibus-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
 .day-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-radius: var(--radius) var(--radius) 0 0; border-left: 3px solid var(--day-color, var(--accent)); background: var(--surface); border-bottom: 1px solid var(--border); }
 .day-title { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
 .day-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--day-color, var(--accent)); flex-shrink: 0; }
@@ -139,6 +151,7 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
 .search-clear { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; border: none; background: var(--surface2); border-radius: 50%; color: var(--muted); cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: center; }
 .highlight-match { background: rgba(74,144,217,0.3); border-radius: 3px; padding: 0 2px; }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -212,6 +225,14 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
 
   <!-- ADMIN -->
   <div id="sec-admin" class="section">
+    <div class="admin-section">
+      <div class="admin-title">Exportar para Excel</div>
+      <div class="card">
+        <div class="danger-desc" style="margin-bottom:14px">Baixe os dados em planilha Excel (.xlsx).</div>
+        <button class="btn-primary" style="margin-bottom:10px" onclick="exportarNomes()">Exportar Nomes + Dias</button>
+        <button class="btn-primary" onclick="exportarPagamentos()">Exportar Pagamentos</button>
+      </div>
+    </div>
     <div class="admin-section">
       <div class="admin-title">Zona de perigo</div>
       <div class="danger-zone">
@@ -289,6 +310,11 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
       <label>Valor da passagem por onibus (R$)</label>
       <input type="number" id="cfg-valbus" placeholder="3000" min="0" step="0.01" />
     </div>
+    <div class="section-label">Pagamento</div>
+    <div class="form-group">
+      <label>Valor por dia, por pessoa (R$)</label>
+      <input type="number" id="cfg-valdia" placeholder="50" min="0" step="0.01" />
+    </div>
     <button class="btn-primary" onclick="saveConfig()">Salvar</button>
   </div>
 </div>
@@ -299,7 +325,7 @@ input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner
 const API = 'https://script.google.com/macros/s/AKfycbxKEveoICa3VSttHkNRRW9cpk48GYtkE_W5puMRQsCMlSvooF9tvJdRr7WfzA3WdJRE/exec';
 
 let pessoas = [];
-let config = { nome: '', capacidade: 46, valorOnibus: 3000 };
+let config = { nome: '', capacidade: 46, valorOnibus: 3000, valorDia: 0 };
 let selectedDays = [];
 let editingId = null;
 let editDays = [];
@@ -339,6 +365,7 @@ async function loadData() {
     if (cfg.nome) config.nome = cfg.nome;
     if (cfg.capacidade) config.capacidade = Number(cfg.capacidade);
     if (cfg.valorOnibus) config.valorOnibus = Number(cfg.valorOnibus);
+    if (cfg.valorDia) config.valorDia = Number(cfg.valorDia);
     const data = await fetch(API).then(r=>r.json());
     pessoas = Array.isArray(data) ? data.map(row => ({
       id: row['ID'], nome: row['Nome'],
@@ -382,6 +409,7 @@ function openCfg() {
   document.getElementById('cfg-nome').value = config.nome;
   document.getElementById('cfg-cap').value = config.capacidade;
   document.getElementById('cfg-valbus').value = config.valorOnibus;
+  document.getElementById('cfg-valdia').value = config.valorDia || '';
   document.getElementById('modal-cfg').classList.add('open');
 }
 function closeCfg() { document.getElementById('modal-cfg').classList.remove('open'); }
@@ -390,6 +418,7 @@ async function saveConfig() {
   config.nome = document.getElementById('cfg-nome').value.trim();
   config.capacidade = parseInt(document.getElementById('cfg-cap').value) || 46;
   config.valorOnibus = parseFloat(document.getElementById('cfg-valbus').value) || 3000;
+  config.valorDia = parseFloat(document.getElementById('cfg-valdia').value) || 0;
   setLoading(true, 'Salvando...');
   try {
     await fetch(API, { method:'POST', body: JSON.stringify({ action:'config', ...config }) });
@@ -495,6 +524,75 @@ async function resetarDados() {
   setLoading(false);
 }
 
+function dataParaArquivo() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function exportarNomes() {
+  if (pessoas.length === 0) { showToast('Nenhuma pessoa para exportar'); return; }
+  const linhas = pessoas.map((p, i) => ({
+    '#': i+1,
+    'Nome': p.nome,
+    'Sexta': p.dias.includes('sex') ? 'X' : '',
+    'Sabado': p.dias.includes('sab') ? 'X' : '',
+    'Domingo': p.dias.includes('dom') ? 'X' : '',
+    'Total de dias': p.dias.length,
+    'Observacao': p.obs || ''
+  }));
+  const ws = XLSX.utils.json_to_sheet(linhas);
+  ws['!cols'] = [{wch:5},{wch:28},{wch:8},{wch:8},{wch:9},{wch:13},{wch:25}];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Nomes e Dias');
+  XLSX.writeFile(wb, 'nomes-dias-' + dataParaArquivo() + '.xlsx');
+  showToast('Planilha de nomes gerada!');
+}
+
+function exportarPagamentos() {
+  if (pessoas.length === 0) { showToast('Nenhuma pessoa para exportar'); return; }
+  const valorDia = config.valorDia || 0;
+  if (valorDia === 0) { showToast('Defina o valor por dia nas configuracoes'); return; }
+  const linhas = pessoas.map((p, i) => {
+    const devido = p.dias.length * valorDia;
+    const falta = Math.max(0, devido - p.valor);
+    const sobra = Math.max(0, p.valor - devido);
+    let situacao = 'Em dia';
+    if (falta > 0) situacao = 'Pendente';
+    else if (sobra > 0) situacao = 'Pagou a mais';
+    return {
+      '#': i+1,
+      'Nome': p.nome,
+      'Dias': p.dias.length,
+      'Valor devido': devido,
+      'Valor pago': p.valor,
+      'Falta pagar': falta,
+      'Situacao': situacao,
+      'Observacao': p.obs || ''
+    };
+  });
+  // linha de total
+  const totalDevido = linhas.reduce((s,l)=>s+l['Valor devido'],0);
+  const totalPago = linhas.reduce((s,l)=>s+l['Valor pago'],0);
+  const totalFalta = linhas.reduce((s,l)=>s+l['Falta pagar'],0);
+  linhas.push({});
+  linhas.push({ 'Nome':'TOTAL', 'Valor devido':totalDevido, 'Valor pago':totalPago, 'Falta pagar':totalFalta });
+
+  const ws = XLSX.utils.json_to_sheet(linhas);
+  ws['!cols'] = [{wch:5},{wch:28},{wch:6},{wch:13},{wch:12},{wch:12},{wch:14},{wch:25}];
+  // formatar colunas de dinheiro
+  const range = XLSX.utils.decode_range(ws['!ref']);
+  for (let r = 1; r <= range.e.r; r++) {
+    ['D','E','F'].forEach(col => {
+      const cell = ws[col + (r+1)];
+      if (cell && typeof cell.v === 'number') cell.z = 'R$ #,##0.00';
+    });
+  }
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Pagamentos');
+  XLSX.writeFile(wb, 'pagamentos-' + dataParaArquivo() + '.xlsx');
+  showToast('Planilha de pagamentos gerada!');
+}
+
 function fmt(v) { return 'R$ ' + Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
 
 function render() {
@@ -511,7 +609,7 @@ function renderOnibus() {
     <div class="sum-card"><div class="sum-value green" style="font-size:15px">${fmt(totalPago)}</div><div class="sum-label">Total arrecadado</div></div>
   </div>`;
   if (total === 0) { document.getElementById('onibus-content').innerHTML = '<div class="empty">Nenhuma pessoa cadastrada ainda.<br>Use a aba "+ Pessoa" para comecar.</div>'; return; }
-  let html = '';
+  let html = '<div class="onibus-grid">';
   ['sex','sab','dom'].forEach(dia => {
     const ps = pessoas.filter(p=>p.dias.includes(dia));
     if (ps.length === 0) return;
@@ -527,6 +625,7 @@ function renderOnibus() {
     }
     html += `</div></div>`;
   });
+  html += '</div>';
   document.getElementById('onibus-content').innerHTML = html;
 }
 
