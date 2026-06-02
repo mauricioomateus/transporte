@@ -562,7 +562,8 @@ function exportarPagamentos() {
     return {
       '#': i+1,
       'Nome': p.nome,
-      'Dias': p.dias.length,
+      'Dias': p.dias.map(d => dayLabels[d]).join(', '),
+      'Qtd dias': p.dias.length,
       'Valor devido': devido,
       'Valor pago': p.valor,
       'Falta pagar': falta,
@@ -578,11 +579,11 @@ function exportarPagamentos() {
   linhas.push({ 'Nome':'TOTAL', 'Valor devido':totalDevido, 'Valor pago':totalPago, 'Falta pagar':totalFalta });
 
   const ws = XLSX.utils.json_to_sheet(linhas);
-  ws['!cols'] = [{wch:5},{wch:28},{wch:6},{wch:13},{wch:12},{wch:12},{wch:14},{wch:25}];
-  // formatar colunas de dinheiro
+  ws['!cols'] = [{wch:5},{wch:28},{wch:22},{wch:9},{wch:13},{wch:12},{wch:12},{wch:14},{wch:25}];
+  // formatar colunas de dinheiro (E=Valor devido, F=Valor pago, G=Falta pagar)
   const range = XLSX.utils.decode_range(ws['!ref']);
   for (let r = 1; r <= range.e.r; r++) {
-    ['D','E','F'].forEach(col => {
+    ['E','F','G'].forEach(col => {
       const cell = ws[col + (r+1)];
       if (cell && typeof cell.v === 'number') cell.z = 'R$ #,##0.00';
     });
